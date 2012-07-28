@@ -2,8 +2,14 @@
   "author": "Brian Kirchoff <briankircho@gmail.com>",
   "name": "mongoose-tree",
   "description": "Materialized path hierarchy for mongoose",
+  "homepage": "https://github.com/briankircho/mongoose-tree",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/briankircho/mongoose-tree.git"
+  },
+  "main": "index.js",
   "version": "0.0.1",
-  "engine": "node >= 0.8.0",
+  "engine": "node >= 0.4.0",
   "dependencies": {
     "mongoose": "~2.7.1"
   },

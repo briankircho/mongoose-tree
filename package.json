@@ -11,7 +11,7 @@
   "version": "0.0.1",
   "engine": "node >= 0.4.0",
   "dependencies": {
-    "mongoose": "~2.7.1"
+    "mongoose": "~3.0.0"
   },
   "devDependencies": {
     "async": "~0.1.22",

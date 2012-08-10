@@ -64,7 +64,7 @@ describe('tree tests', function() {
         emily.remove(function(err) {
           should.not.exist(err);
 
-          User.find({}, ['name'], function(err, users) {
+          User.find(['name'], function(err, users) {
             should.not.exist(err);
             users.length.should.equal(4);
             _.pluck(users, 'name').should.not.include('Emily');
@@ -80,7 +80,7 @@ describe('tree tests', function() {
         user.remove(function(err) {
           should.not.exist(err);
 
-          User.find({}, ['name'], function(err, users) {
+          User.find(['name'], function(err, users) {
             should.not.exist(err);
 
             users.length.should.equal(2);

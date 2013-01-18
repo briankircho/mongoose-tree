@@ -24,7 +24,7 @@ var bob = new User({ name : 'Bob' });
 var carol = new User({ name : 'Carol' });
 
 // Set the parent relationships
-bob.parent = adam; 
+bob.parent = adam;
 carol.parent = bob;
 
 adam.save(function() {
@@ -36,20 +36,20 @@ adam.save(function() {
 
 At this point in mongoDB you will have documents similar to
 
-    { 
+    {
       "_id" : ObjectId("50136e40c78c4b9403000001"),
       "name" : "Adam",
       "path" : "50136e40c78c4b9403000001"
     }
-    { 
+    {
       "_id" : ObjectId("50136e40c78c4b9403000002"),
       "name" : "Bob",
       "parent" : ObjectId("50136e40c78c4b9403000001"),
       "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002"
     }
-    { 
+    {
       "_id" : ObjectId("50136e40c78c4b9403000003"),
-      "name" : "Carol", 
+      "name" : "Carol",
       "parent" : ObjectId("50136e40c78c4b9403000002"),
       "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002.50136e40c78c4b9403000003"
     }
@@ -78,16 +78,16 @@ adam.getChildren(true, function(err, users) {
 });
 ```
 
-### getAnsestors
+### getAncestors
 
 Signature:
 
-    getAnsestors(cb);
+    getAncestors(cb);
 
 Based on the above hierarchy:
 
 ```javascript
-carol.getAnsestors(function(err, users) {
+carol.getAncestors(function(err, users) {
   // users is an array of adam and bob
 })
 ```

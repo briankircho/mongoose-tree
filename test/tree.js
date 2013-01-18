@@ -43,7 +43,7 @@ describe('tree tests', function() {
         users.forEach(function(user) {
           names[user.name] = user;
         });
-        
+
         should.not.exist(names['Adam'].parent);
         names['Bob'].parent.toString().should.equal(names['Adam']._id.toString());
         names['Carol'].parent.toString().should.equal(names['Adam']._id.toString());
@@ -122,7 +122,7 @@ describe('tree tests', function() {
         users.forEach(function(user) {
           names[user.name] = user;
         });
-        
+
         var carol = names['Carol'];
         var bob = names['Bob'];
 
@@ -176,14 +176,14 @@ describe('tree tests', function() {
     });
   });
 
-  describe('get ansestors', function() {
+  describe('get ancestors', function() {
     it('should return ancestors', function(done) {
       User.findOne({ 'name' : 'Dann' }, function(err, dann) {
-        dann.getAnsestors(function(err, ansestors) {
+        dann.getAncestors(function(err, ancestors) {
           should.not.exist(err);
 
-          ansestors.length.should.equal(2);
-          _.pluck(ansestors, 'name').should.include('Carol').and.include('Adam');
+          ancestors.length.should.equal(2);
+          _.pluck(ancestors, 'name').should.include('Carol').and.include('Adam');
           done();
         });
       });

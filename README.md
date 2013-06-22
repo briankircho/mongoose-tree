@@ -2,6 +2,11 @@
 
 Implements the materialized path strategy for storing a hierarchy of documents with mongoose
 
+Warning: the original code is from Brian Kirchoff, but it seem's that he no longer take care of mongoo-tree.
+https://github.com/briankircho/mongoose-tree
+
+
+
 # Usage
 
 Install via NPM
@@ -45,13 +50,13 @@ At this point in mongoDB you will have documents similar to
       "_id" : ObjectId("50136e40c78c4b9403000002"),
       "name" : "Bob",
       "parent" : ObjectId("50136e40c78c4b9403000001"),
-      "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002"
+      "path" : "50136e40c78c4b9403000001#50136e40c78c4b9403000002"
     }
     {
       "_id" : ObjectId("50136e40c78c4b9403000003"),
       "name" : "Carol",
       "parent" : ObjectId("50136e40c78c4b9403000002"),
-      "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002.50136e40c78c4b9403000003"
+      "path" : "50136e40c78c4b9403000001#50136e40c78c4b9403000002#50136e40c78c4b9403000003"
     }
 
 The path is used for recursive methods and is kept up to date by the plugin if the parent is changed
@@ -64,7 +69,7 @@ Signature:
 
     getChildren([recursive], cb);
 
-if recursive is supplied and true subchildren are returned
+if recursive is supplied and true, subchildren are returned
 
 Based on the above hierarchy:
 
@@ -76,6 +81,79 @@ adam.getChildren(function(err, users) {
 adam.getChildren(true, function(err, users) {
   // users is an array with both bob and carol documents
 });
+```
+
+### getChildrenTree
+
+Signature:
+   
+    getChildrenTree([args], cb);
+
+return a recursive tree of subchildren.
+
+args is an object you can defined with theses properties :
+
+    filters: mongoose query filter, optional, default null
+      example: filters: {owner:myId}
+
+    columns: mongoose columns, optional, default null (all columns)
+      example: columns: {"_id name owner"}
+
+    options: mongoose query option, optional, default null
+      example: options:{{sort:'-name'}}
+
+    minLevel: level at which will start the search, default 1
+      example: minLevel:2
+
+    recursive: boolean, default true
+      make the search recursive or only fetch childs for the specified level
+      example: recursive:false
+
+    emptyChilds: boolean, default true
+      if true, every childs not having subchilds will have childs attribute (empty array)
+      if false, every childs not having subchilds will not have childs attribute
+
+    Example :
+
+    ```javascript
+    var args = {
+      filters: {owner:myId},
+      columns: {"_id name owner"},
+      minLevel:2,
+      recursive:true,
+      emptyChilds:false
+    }
+
+    getChildren(args,myCallback);
+    ```
+
+Based on the above hierarchy:
+
+```javascript
+adam.getChildren([function](err, users) {
+
+    /* if you dump users, you will have something like this :
+    {
+      "_id" : ObjectId("50136e40c78c4b9403000001"),
+      "name" : "Adam",
+      "path" : "50136e40c78c4b9403000001"
+      "childs" : [{
+          "_id" : ObjectId("50136e40c78c4b9403000002"),
+          "name" : "Bob",
+          "parent" : ObjectId("50136e40c78c4b9403000001"),
+          "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002"
+          "childs" : [{
+              "_id" : ObjectId("50136e40c78c4b9403000003"),
+              "name" : "Carol",
+              "parent" : ObjectId("50136e40c78c4b9403000002"),
+              "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002.50136e40c78c4b9403000003"
+          }]
+      }]
+    }
+    */
+
+});
+
 ```
 
 ### getAncestors

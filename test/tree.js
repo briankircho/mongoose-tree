@@ -50,7 +50,7 @@ describe('tree tests', function() {
         names['Dann'].parent.toString().should.equal(names['Carol']._id.toString());
         names['Emily'].parent.toString().should.equal(names['Dann']._id.toString());
 
-        var expectedPath = [names['Adam']._id, names['Carol']._id, names['Dann']._id].join('.');
+        var expectedPath = [names['Adam']._id, names['Carol']._id, names['Dann']._id].join('#');
         names['Dann'].path.should.equal(expectedPath);
 
         done();
@@ -106,7 +106,7 @@ describe('tree tests', function() {
           return;
         }
         should.exist(ids[user.parent]);
-        user.path.should.equal(ids[user.parent].path+"."+user._id);
+        user.path.should.equal(ids[user.parent].path+"#"+user._id);
       });
 
       done();

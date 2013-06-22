@@ -45,16 +45,24 @@ At this point in mongoDB you will have documents similar to
       "_id" : ObjectId("50136e40c78c4b9403000002"),
       "name" : "Bob",
       "parent" : ObjectId("50136e40c78c4b9403000001"),
-      "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002"
+      "path" : "50136e40c78c4b9403000001#50136e40c78c4b9403000002"
     }
     {
       "_id" : ObjectId("50136e40c78c4b9403000003"),
       "name" : "Carol",
       "parent" : ObjectId("50136e40c78c4b9403000002"),
-      "path" : "50136e40c78c4b9403000001.50136e40c78c4b9403000002.50136e40c78c4b9403000003"
+      "path" : "50136e40c78c4b9403000001#50136e40c78c4b9403000002#50136e40c78c4b9403000003"
     }
 
 The path is used for recursive methods and is kept up to date by the plugin if the parent is changed
+
+## Options
+
+```javascript
+Model.plugin(tree, {
+  pathSeparator : '#' // Default path separator
+})
+```
 
 # API
 
